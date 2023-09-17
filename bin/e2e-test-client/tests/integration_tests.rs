@@ -22,6 +22,18 @@ async fn works_in_local_env() {
     execute_suite(config.path).await
 }
 
+
+
+#[tokio::test(flavor = "multi_thread")]
+async fn works_in_local_env() {
+    // setup a local node
+    let srv = setup_local_node().await;
+    // generate a config file
+    let config = generate_config_file(srv.bound_address.to_string());
+    // execute suite
+    execute_suite(config.path).await
+}
+
 // Spins up a node for each wallet and verifies that the suite works across multiple nodes
 #[cfg(feature = "p2p")]
 #[tokio::test(flavor = "multi_thread")]
